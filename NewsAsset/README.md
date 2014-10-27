@@ -1,2 +1,0 @@
-News Asset Use Case
-========

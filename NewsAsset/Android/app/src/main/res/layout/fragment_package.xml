@@ -1,0 +1,77 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/white"
+    tools:context="gr.atc.heads.DetailsActivity">
+
+    <ImageView
+        android:id="@+id/bioPackageImg"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="4"
+        android:scaleType="fitCenter"
+        android:src="@drawable/header_logo"
+        android:background="@color/white"
+        android:contentDescription="@string/app_name" />
+
+    <ScrollView
+        android:id="@+id/scrollview"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="3" >
+
+        <LinearLayout
+            android:id="@+id/packageDetails"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:layout_marginBottom="6dp"
+                android:gravity="left"
+                android:paddingLeft="10dp"
+                android:textSize="@dimen/text_size_large"
+                android:textColor="@color/black" />
+
+            <TextView
+                android:id="@+id/tags"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="6dp"
+                android:gravity="left"
+                android:paddingLeft="10dp"
+                android:textSize="@dimen/text_size_large"
+                android:textColor="@color/black" />
+
+            <TextView
+                android:id="@+id/description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="6dp"
+                android:gravity="left"
+                android:paddingLeft="10dp"
+                android:textSize="@dimen/text_size_medium"
+                android:singleLine="false"
+                android:textColor="@color/black" />
+
+            <TextView
+                android:id="@+id/date"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="6dp"
+                android:gravity="left"
+                android:paddingLeft="10dp"
+                android:textSize="@dimen/text_size_medium"
+                android:textColor="@color/black" />
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</LinearLayout>

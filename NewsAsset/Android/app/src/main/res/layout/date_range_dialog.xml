@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/from"
+            android:textSize="@dimen/text_size_large"
+            android:layout_margin="5dp"/>
+        <DatePicker
+            android:id="@+id/from_date"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"></DatePicker>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/to"
+            android:textSize="@dimen/text_size_large"
+            android:layout_margin="5dp"/>
+        <DatePicker
+            android:id="@+id/to_date"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"></DatePicker>
+        <RelativeLayout android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginBottom="8dp">
+            <Button
+                android:id="@+id/date_ok"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:minHeight="40dp"
+                android:text="@string/OK"
+                android:layout_centerHorizontal="true"
+                android:layout_margin="5dp"
+                style="@style/btnStyleOrange"/>
+        </RelativeLayout>
+
+    </LinearLayout>
+</ScrollView>

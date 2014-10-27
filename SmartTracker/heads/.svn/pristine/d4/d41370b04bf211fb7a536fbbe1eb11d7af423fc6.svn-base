@@ -1,0 +1,64 @@
+package no.tellu.tracker.heads.sensor;
+
+import java.util.List;
+
+import no.tellu.android.app.ModuleController;
+import no.tellu.android.app.ModuleDef;
+import no.tellu.android.app.stat.StatGroup;
+import no.tellu.android.app.system.TelluApp;
+import no.tellu.tracker.ObservationProvider;
+import no.tellu.tracker.TrackerControl;
+
+public class SensorComController extends ModuleController implements ObservationProvider {
+	public static final String MODULE_ID = "HeadsSensorCom";
+	
+	public static ModuleDef defineModule() {
+		ModuleDef def = new ModuleDef(MODULE_ID, SensorComController.class);
+		return def;
+	}
+	
+	private TrackerControl receiver;
+	
+
+	public SensorComController(TelluApp app, ModuleDef def) {
+		super(app, def);
+	}
+
+	@Override
+	public void onStart() {
+		//Application start - initiation?
+	}
+	
+	@Override
+	public void onExit() {
+		//Module will be destroyed - cleanup?
+		receiver = null;
+	}
+
+	@Override
+	public int getActivityLevel() {
+		return ACTIVITY_LEVEL_HIGH;
+	}
+
+	@Override
+	public void setReceiver(TrackerControl tc) {
+		receiver = tc;
+	}
+
+	@Override
+	public void startObserving() {
+		// TODO: Tracking is turned on - start providing observations
+		
+	}
+
+	@Override
+	public void stopObserving() {
+		// TODO: Tracking is turned off - stop providing observations
+		
+	}
+
+	@Override
+	public void getStatGroups(List<StatGroup> list) {
+		// TODO: Provide values for debug view?
+	}
+}

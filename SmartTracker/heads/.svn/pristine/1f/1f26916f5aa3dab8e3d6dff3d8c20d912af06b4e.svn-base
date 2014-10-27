@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical"
+    android:padding="@dimen/OuterFrame">
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/app_name"
+        style="@style/HeadingStyle"
+        android:gravity="center_horizontal"
+        android:layout_marginBottom="@dimen/SectionMargin"
+	/>
+    
+    <!-- View
+        style="@style/DividerBar"
+		android:layout_marginBottom="@dimen/MarginLarge"
+	/-->
+    
+    <TableLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:stretchColumns="0"
+    	android:shrinkColumns="0"
+    	android:layout_marginBottom="@dimen/SectionMargin">
+        <TableRow>
+            <TextView
+                android:layout_width="wrap_content"
+           		android:layout_height="wrap_content"
+                android:text="@string/tracker_com"
+           		style="@style/LabelStyle"
+           		android:layout_gravity="center_vertical"
+            />
+            <ImageView
+	        	android:id="@id/trcom_status_led"
+	        	android:src="@drawable/led_off"
+	        	android:layout_width="@dimen/StatusLED"
+    			android:layout_height="@dimen/StatusLED"
+    			android:layout_gravity="center_vertical"
+	        	android:layout_marginLeft="@dimen/MarginMedium"
+	        />
+        </TableRow>
+        <TableRow>
+            <TextView
+                android:layout_width="wrap_content"
+           		android:layout_height="wrap_content"
+                android:text="@string/tracker_pos"
+           		style="@style/LabelStyle"
+           		android:layout_gravity="center_vertical"
+            />
+            <ImageView
+	        	android:id="@id/trpos_status_led"
+	        	android:src="@drawable/led_off"
+	        	android:layout_width="@dimen/StatusLED"
+    			android:layout_height="@dimen/StatusLED"
+    			android:layout_gravity="center_vertical"
+	        	android:layout_marginLeft="@dimen/MarginMedium"
+	        />
+        </TableRow>
+        <TableRow>
+            <TextView
+                android:id="@+id/heads_status_text"
+                android:layout_width="wrap_content"
+           		android:layout_height="wrap_content"
+                android:text="@string/heads_status"
+           		style="@style/LabelStyle"
+           		android:layout_gravity="center_vertical"
+            />
+            <ImageView
+	        	android:id="@+id/heads_status_led"
+	        	android:src="@drawable/led_green"
+	        	android:layout_width="@dimen/StatusLED"
+    			android:layout_height="@dimen/StatusLED"
+    			android:layout_gravity="center_vertical"
+	        	android:layout_marginLeft="@dimen/MarginMedium"
+	        />
+        </TableRow>
+    </TableLayout>
+    
+     <!-- View
+        style="@style/DividerBar"
+		android:layout_marginBottom="@dimen/MarginLarge"
+	/-->
+    
+    <LinearLayout
+        android:layout_width="fill_parent"
+   		android:layout_height="wrap_content"
+   		android:orientation="horizontal"
+   		android:layout_marginBottom="@dimen/SectionMargin">
+   		<TextView
+            android:text="@string/trctr_tracking"
+            style="@style/HeadingStyle"
+            android:layout_width="0dp"
+			android:layout_height="wrap_content"
+			android:layout_weight="1"
+            android:gravity="center_horizontal"
+            android:layout_gravity="center_vertical"
+        />
+        <RelativeLayout
+            android:layout_width="0dp"
+			android:layout_height="wrap_content"
+			android:layout_weight="1">
+			<no.tellu.tracker.control.ToggleSwitch
+	            android:id="@+id/trswitch"
+	    		android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+	            android:layout_centerHorizontal="true"
+	        />
+			<TextView
+	            android:id="@+id/off"
+	            android:text="@string/trctr_control_off"
+	            style="@style/LabelStyle"
+	            android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+	            android:layout_toLeftOf="@id/trswitch"
+	            android:layout_centerVertical="true"
+	        />
+            <TextView
+	            android:id="@+id/on"
+	            android:text="@string/trctr_control_on"
+	            style="@style/LabelStyle"
+	            android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+	            android:layout_toRightOf="@id/trswitch"
+	            android:layout_centerVertical="true"
+	        />
+        </RelativeLayout>
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+
+        <Spinner
+            android:id="@+id/spinner_graphrow_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"                  
+            android:textSize="20sp" />
+        
+		<LinearLayout
+		    android:orientation="horizontal"
+		    android:id="@+id/graphname_layout"
+		    android:layout_centerHorizontal="true"
+		    android:layout_below="@id/spinner_graphrow_name"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content" >
+		    
+		        <TextView
+		            android:id="@+id/tv_sensor_name"
+		            android:layout_width="wrap_content"
+		            android:layout_height="wrap_content"           
+		            android:textSize="30sp"
+		            android:textStyle="bold"
+		            android:layout_gravity="bottom" />
+		
+		        <ImageView
+		            android:id="@+id/iv_sensor_icon"
+		            android:layout_width="wrap_content"
+		            android:layout_height="wrap_content"	
+		            android:layout_marginLeft="20dp"	           
+		            android:contentDescription="@string/details_icon_description"
+		            android:layout_gravity="bottom" />
+		</LinearLayout>
+		
+        <TextView
+            android:id="@+id/tv_sensor_value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@id/graphname_layout"
+            android:textSize="40sp" />
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="160dip"
+            android:layout_alignParentBottom="true" >
+
+            <org.thingml.chestbelt.android.chestbeltdroid.graph.GraphDetailsView
+                android:id="@+id/gv_sensor_graph"
+                android:layout_width="fill_parent"
+                android:layout_height="match_parent" />
+        </FrameLayout>
+
+        <!--
+    <TextView
+	    android:id="@+id/tv_graphrow_name"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:layout_alignParentTop="true"
+	    android:layout_centerVertical="true"
+	    android:paddingLeft="40dp"
+	    android:textSize="20sp" >
+
+	</TextView>
+        -->
+
+
+        <!--
+         <org.thingml.chestbelt.android.chestbeltdroid.graph.GraphDetailsView
+	    android:id="@+id/gv_graphrow_graph"
+	    android:layout_width="match_parent"
+	    android:layout_height="150dp"
+	    android:layout_below="@id/spinner_graphrow_name" />
+        -->
+
+    </RelativeLayout>
+    
+</LinearLayout>

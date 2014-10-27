@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/white"
+    tools:context="gr.atc.heads.fragments.SearchFragment" >
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="10dip" >
+
+        <TextView
+            android:id="@+id/tpackage_title"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/title"
+            android:textColor="@color/text"
+            android:textSize="@dimen/text_size_medium"/>
+
+        <EditText
+            android:id="@+id/package_title"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dip"
+            android:layout_marginTop="5dip"
+            android:ems="10"
+            android:hint="@string/imagetitle"
+            android:inputType="textMultiLine"
+            android:maxLines="3"
+            android:singleLine="false"
+            android:textColor="@color/text"
+            android:textSize="@dimen/text_size_medium" />
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/description"
+            android:textColor="@color/text"
+            android:textSize="@dimen/text_size_medium"/>
+
+        <EditText
+            android:id="@+id/description"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dip"
+            android:layout_marginTop="5dip"
+            android:gravity="top"
+            android:hint="@string/description_hint"
+            android:inputType="textMultiLine"
+            android:lines="2"
+            android:singleLine="false"
+            android:textColor="@color/text"
+            android:textSize="@dimen/text_size_medium" />
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/search_tags"
+            android:textColor="@color/text"
+            android:textSize="@dimen/text_size_medium"
+            android:visibility="gone"/>
+
+        <EditText
+            android:id="@+id/search_tags"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dip"
+            android:layout_marginTop="5dip"
+            android:clickable="true"
+            android:hint="@string/search_tags_hint"
+            android:drawableRight="@drawable/arrow_right"
+            android:textColor="@color/text"
+            android:textSize="@dimen/text_size_medium"
+            android:visibility="gone"/>
+
+        <TextView
+            android:id="@+id/when_spinner_title"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/search_when"
+            android:textColor="@color/text"
+            android:textSize="@dimen/text_size_medium"/>
+
+        <EditText
+            android:id="@+id/search_when"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dip"
+            android:layout_marginTop="5dip"
+            android:clickable="true"
+            android:drawableRight="@drawable/arrow_right"
+            android:inputType="text"
+            android:singleLine="true"/>
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/search_where"
+            android:textColor="@color/text"
+            android:textSize="@dimen/text_size_medium"/>
+
+        <EditText
+            android:id="@+id/search_where"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dip"
+            android:layout_marginTop="5dip"
+            android:clickable="true"
+            android:drawableRight="@drawable/arrow_right"
+            android:inputType="text"
+            android:singleLine="true"
+            android:text="@string/search_current_location" />
+
+        <LinearLayout
+            android:id="@+id/range_layout"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="10dip"
+            android:layout_marginTop="5dip"
+            android:visibility="gone">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/search_range"
+                android:textColor="@color/text"
+                android:textSize="@dimen/text_size_medium"
+                android:layout_gravity="center_vertical"/>
+
+            <Spinner
+                android:id="@+id/search_range_spinner"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:entries="@array/search_range_options"
+                android:layout_gravity="center_vertical"
+                tools:listitem="@android:layout/simple_spinner_item" />
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/imagePreview"
+            android:visibility="gone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:maxHeight="350dp"
+            android:maxWidth="350dp"
+            android:adjustViewBounds="true"
+            android:scaleType="fitXY"
+            android:layout_gravity="center_horizontal"
+            android:src="@drawable/placeholder"
+            android:clickable="true"
+            android:background="@drawable/image_background"
+            android:layout_marginBottom="8dip"/>
+        <Button
+            android:id="@+id/submit"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="10dip"
+            android:text="@string/search"
+            style="@style/btnStyleOrange" />
+    </LinearLayout>
+
+</ScrollView>

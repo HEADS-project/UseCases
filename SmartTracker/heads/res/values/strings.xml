@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">HEADS App</string>
+	<string name="heads_status">Sensor belt</string>
+	<string name="chest_unit">Chest Unit</string>
+	
+
+    <string name="list_header_text">Known devices</string>
+	<string name="list_footer_text">Detect available devices</string>
+	<string name="details_icon_description">Details activity icon descriptor</string>
+	
+	<string name="pref_data_storage">storage_status</string>
+	<string name="pref_ecg_storage">storage_ecg_status</string>
+	<string name="pref_imu_storage">storage_imu_status</string>
+	<string name="pref_sensor_prefix">pref_sensor_prefix</string>
+	<string name="pref_apply_changes">pref_apply_changes_button</string>
+	<string name="pref_datamode_key">datamode_list_preference</string>
+	<string name="pref_autoreconnect_duration_key">pref_autoreconnect_duration_key</string>
+	<string name="pref_autoreconnect_key">pref_autoreconnect_key</string>
+	<string name="list_status_image_description">list_status_image_description</string>
+	<string name="list_available_image_description">list_available_image_description</string>
+	<string name="tv_accelerometers_title">Accelerometers</string>
+	<string name="tv_gyroscopes_title">Gyroscopes</string>
+
+</resources>

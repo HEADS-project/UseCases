@@ -1,0 +1,239 @@
+package no.tellu.tracker.control;
+
+import no.tellu.android.app.ModuleController;
+import no.tellu.android.app.ModuleDef;
+import no.tellu.android.app.ModuleController.ModuleStatusListener;
+import no.tellu.android.app.command.AppCommand;
+import no.tellu.android.app.command.ViewCommand;
+import no.tellu.android.app.conf.ConfigurationController;
+import no.tellu.android.app.formgen.DataGroup;
+import no.tellu.android.app.formgen.FormChoice;
+import no.tellu.android.app.formgen.FormInput;
+import no.tellu.android.app.formgen.FormInputTimespan;
+import no.tellu.android.app.formgen.FormPage;
+import no.tellu.android.app.formgen.FormToggle;
+import no.tellu.android.app.logconf.LogfileController;
+import no.tellu.android.app.system.TelluApp;
+import no.tellu.android.app.view.ViewController;
+import no.tellu.android.app.view.ViewDef;
+import no.tellu.android.app.view.ViewManager;
+import no.tellu.android.util.ServiceStates;
+import no.tellu.tracker.ObservationProvider;
+import no.tellu.tracker.ObservationReceiver;
+import no.tellu.tracker.Track;
+import no.tellu.tracker.TrackerControl;
+import no.tellu.tracker.com.ComController;
+import no.tellu.tracker.heads.R;
+import no.tellu.tracker.heads.sensor.SensorComController;
+import no.tellu.tracker.position.PositionManager;
+import no.tellu.tracker.power.PowerObserver;
+
+public class HeadsControl extends TrackerController
+implements ModuleStatusListener, ServiceStates {
+	public static final String MODULE_ID = "HeadsController";
+	
+	public static ModuleDef defineModule() {
+		ModuleDef def = new ModuleDef(MODULE_ID, HeadsControl.class);
+		def.addView(new ViewDef(CONTROL_VIEW, HeadsControlView.class, R.layout.heads_control_view));
+		def.addView(new ViewDef(STAT_VIEW, DebugView.class, R.layout.trctr_debug_view));
+		return def;
+	}
+	
+	//Status
+	int connectionStatus = 0;
+	int geoTrackingStatus = 0;
+	
+	private StringBuilder sb = new StringBuilder();
+	
+
+	public HeadsControl(TelluApp app, ModuleDef def) {
+		super(app, def);
+		trackPersistence = Track.PERSIST_SERVER;
+		offPersistence = Track.PERSIST_SERVER;
+		canTrackOnExit = true;
+	}
+
+	@Override
+	protected void createConfig(ConfigurationController cc) {
+		// No settings for this module so far
+	}
+	
+	@Override
+	public void onStart() {
+		super.onStart();
+		
+		ModuleController mod;
+		mod = getApp().createModule(PositionManager.MODULE_ID);
+		mod.setStatusListener(this);
+		addProvider((ObservationProvider)mod);
+		
+		mod = getApp().createModule(PowerObserver.MODULE_ID);
+		addProvider((ObservationProvider)mod);
+		
+		mod = getApp().createModule(SensorComController.MODULE_ID);
+		addProvider((ObservationProvider)mod);
+		
+		mod = getApp().createModule(ComController.MODULE_ID);
+		connectionStatus = mod.getModuleStatus();
+		mod.setStatusListener(this);
+		addReceiver((ObservationReceiver)mod);
+		
+		ConfigurationController cc =
+				(ConfigurationController)getApp().createModule(ConfigurationController.MODULE_ID);
+		createConfigGui(cc);
+		
+		initiate();
+		
+		createMenu();
+		getUI().requestViewMain(CONTROL_VIEW, "fullscreen",
+				ViewManager.STACK_START, null);
+	}
+	
+	@Override
+	public void onViewShown(String viewId, ViewController view, String paramStr) {
+		super.onViewShown(viewId, view, paramStr);
+		if (viewId == STAT_VIEW)
+			view.refresh();
+	}
+	
+	@Override
+	public void onViewRemoved(String viewId, boolean finished) {
+		super.onViewRemoved(viewId, finished);
+	}
+	
+	@Override
+	public void onSettingUpdate(DataGroup configGroup) {
+		// No settings for this module so far
+	}
+
+	@Override
+	protected void onStateUpdate(int newState) {
+		setBackgroundMode();
+	}
+
+	@Override
+	public void onModuleStatus(String moduleId, int status) {
+		if (moduleId.equals(ComController.MODULE_ID)) {
+			connectionStatus = status;
+			setBackgroundStatus();
+			setBackgroundMode();
+		} else if (moduleId.equals(PositionManager.MODULE_ID)) {
+			geoTrackingStatus = status;
+			setBackgroundStatus();
+		}
+	}
+	
+	private void setBackgroundStatus() {
+		int icon = R.drawable.status_green;
+		if (geoTrackingStatus==STATUS_CAT_ERROR || connectionStatus==STATUS_CAT_ERROR) {
+			icon = R.drawable.status_red;
+		} else if (geoTrackingStatus==STATUS_CAT_PARTIALLY_FUNCTIONAL || connectionStatus==STATUS_CAT_PARTIALLY_FUNCTIONAL) {
+			icon = R.drawable.status_yellow;
+		}
+		TelluApp app = getApp();
+		String[] trackingStatusMes = app.getResources().getStringArray(R.array.trpos_status);
+		String[] conStatusMes = app.getResources().getStringArray(R.array.trcom_status);
+		sb.setLength(0);
+		sb.append(app.getString(R.string.trctr_tracking)).append(' ');
+		sb.append(trackingStatusMes[geoTrackingStatus]).append("; ");
+		sb.append(app.getString(R.string.tracker_com)).append(' ');
+		sb.append(conStatusMes[connectionStatus]);
+		
+		app.setBackgroundStatus(sb.toString(), icon);
+	}
+	
+	private void setBackgroundMode() {
+		if (log.isDebug())
+			log.debug("setBackgroundMode - TRACKING=" + currentStateId
+					+ " CON=" + connectionStatus);
+		int bm = TelluApp.BACKGROUND_OFF;
+		if (currentStateId>=TRACKING_TRACK || connectionStatus>STATUS_CAT_ERROR) {
+			bm = TelluApp.BACKGROUND_ACTIVE;
+		}
+		
+		if (bm != getApp().getBackgroundMode()) {
+			getApp().setBackgroundMode(bm, null);
+			getApp().getPersistentProperties().setBoolean(
+					TelluApp.APP_PROPERTY_BOOT, bm!=TelluApp.BACKGROUND_OFF);
+		}
+	}
+	
+	private void createMenu() {
+		AppCommand[] menu = new AppCommand[2];
+		menu[0] = new ViewCommand(null, R.string.tracker_conf,
+				android.R.drawable.ic_menu_preferences, ConfigurationController.CONF_VIEW);
+		menu[1] = new ViewCommand(null, R.string.tracker_debug,
+				android.R.drawable.ic_menu_manage, TrackerControl.STAT_VIEW);
+		getUI().setAndroidMenu(menu, false);
+	}
+	
+	private void createConfigGui(ConfigurationController cc) {
+		//Connection settings
+		FormPage fg = new FormPage(ComController.CAT_CONNECTION, R.string.tracker_com,
+				R.drawable.tracker_con);
+		FormInput<String> inpStr = new FormInput<String>(ComController.SET_UUID,
+				R.string.trcom_config_uuid);
+		fg.addItem(inpStr);
+		inpStr = new FormInput<String>(ComController.SET_URL, R.string.trcom_config_url);
+		fg.addItem(inpStr);
+		FormChoice<Integer> intCh = new FormChoice<Integer>(ComController.SET_INTERVAL,
+				R.string.trcom_config_coninterval);
+		intCh.setAlternatives(new Integer[]{-1, 0, 60, 300, 900, 3600, 21600, 86400},
+				new int[]{R.string.trcom_config_conintoff,
+				R.string.trcom_config_coninterval0, 0,0,0,0,0,0});
+		fg.addItem(intCh);
+		fg.addItem(new FormToggle<Boolean>(ComController.SET_WIFI, R.string.trcom_config_conwifi));
+		intCh = new FormChoice<Integer>(ComController.SET_HEARTBEAT, R.string.trcom_config_heartbeat);
+		intCh.setAlternatives(new Integer[]{0, 60, 180, 300, 600, 900, 1800, 3600},
+				new int[]{R.string.trcom_config_hbeatoff, 0,0,0,0,0,0,0});
+		fg.addItem(intCh);
+		cc.addFormPart(fg);
+		
+		//Positioning settings
+		fg = new FormPage(PositionManager.CAT_POSITION, R.string.tracker_pos,
+				R.drawable.tracker_pos);
+		intCh = new FormChoice<Integer>(PositionManager.GPS_PROVIDER,
+				R.string.trpos_config_provider);
+		intCh.setAlternatives(null, R.array.trpos_config_provider);
+		fg.addItem(intCh);
+		intCh = new FormChoice<Integer>(PositionManager.GPS_WANTACC, R.string.trpos_config_accuracy);
+		intCh.setAlternatives(new Integer[]{10, 50, 100, 250, 500, 1000, 3000}, (int[])null);
+		fg.addItem(intCh);
+		FormInput<Integer> inpInt = new FormInput<Integer>(PositionManager.GPS_MINACC,
+				R.string.trpos_config_minacc);
+		fg.addItem(inpInt);
+		fg.addItem(new FormInputTimespan<Integer>(PositionManager.GPS_INTERVAL,
+			R.string.trpos_config_interval));
+		intCh = new FormChoice<Integer>(PositionManager.GPS_TIMEOUT, R.string.trpos_config_timeout);
+		intCh.setAlternatives(new Integer[]{30, 60, 120, 180, 300}, (int[])null);
+		fg.addItem(intCh);
+		intCh = new FormChoice<Integer>(PositionManager.GPS_TIMEACC, R.string.trpos_config_timeacc);
+		intCh.setAlternatives(null, R.array.trpos_config_timeacc);
+		fg.addItem(intCh);
+		intCh = new FormChoice<Integer>(PositionManager.GPS_TMODE, R.string.trpos_config_timingmode);
+		intCh.setAlternatives(null, R.array.trpos_config_tmode);
+		fg.addItem(intCh);
+		intCh = new FormChoice<Integer>(PositionManager.GPS_WIFIINT, R.string.trpos_config_wifiint);
+		intCh.setAlternatives(new Integer[]{0, 20, 60, 180, 600, 1800},
+				new int[]{R.string.trcom_config_conintoff, 0,0,0,0,0});
+		fg.addItem(intCh);
+		cc.addFormPart(fg);
+		
+		//Power settings
+		fg = new FormPage(PowerObserver.CAT_POWER, R.string.tracker_power,
+				R.drawable.tracker_pow);
+		fg.addItem(new FormToggle<Boolean>(PowerObserver.POWER_LOWBAT,
+				R.string.trpow_config_lowbattery));
+		fg.addItem(new FormToggle<Boolean>(PowerObserver.POWER_CHARGE,
+				R.string.trpow_config_charge));
+		cc.addFormPart(fg);
+		
+		LogfileController logCntr =
+				(LogfileController)getApp().getModuleController(LogfileController.MODULE_ID);
+		if (logCntr != null)
+			logCntr.implementConfigGui();
+		
+		cc.setBackButtonAction(ConfigurationController.ACTION_SAVE);
+		cc.addResetActions(0, true, false);
+	}
+}

@@ -1,0 +1,1 @@
+link ../../libwebp/src/dec/alphai.h

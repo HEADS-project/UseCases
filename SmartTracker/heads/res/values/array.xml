@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+
+    Copyright (C) 2012 SINTEF <fabien@fleurey.com>
+
+    Licensed under the GNU LESSER GENERAL PUBLIC LICENSE, Version 3, 29 June 2007;
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+        http://www.gnu.org/licenses/lgpl-3.0.txt
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+
+-->
+<resources>
+    
+   	<string-array name="pref_connection_mode_entries">
+        <item>Secure standard API</item>
+        <item>Secure native method</item>
+        <item>Insecure standard API</item>
+        <item>Insecure native method</item>
+    </string-array>
+    
+	<string-array name="pref_connection_mode_values">
+        <item>10</item>
+        <item>30</item>
+        <item>20</item>
+        <item>40</item>
+    </string-array>
+    
+	<string-array name="pref_datamode_entries">
+        <item>Extracted</item>
+        <item>Full ECG</item>
+        <item>Raw</item>
+        <item>Raw accelerometer</item>
+        <item>Raw giro mode</item>
+        <item>Test</item>
+    </string-array>
+</resources>

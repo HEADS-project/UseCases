@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    
+<color name="text">#372C24</color>
+
+<color name="blue">#17B6DE</color>    
+<color name="gray">#D9E1E3</color>
+
+<color name="grayListDivider">#ffc1c1c1</color>
+<color name="lightGrayListDivider">#ffe3e3e3</color>
+<color name="darkGrayListDivider">#ff999999</color>
+
+<color name="lighBlack">#FF212424</color>
+<color name="darkGray">#FF131818</color>
+<color name="lightGray">#FF888888</color>
+
+<color name="grayStripe">#cc000000</color>
+
+
+<color name="white">#ffffff</color>
+<color name="black">#000000</color>
+
+</resources>

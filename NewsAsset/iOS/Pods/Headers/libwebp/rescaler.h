@@ -1,0 +1,1 @@
+link ../../libwebp/src/utils/rescaler.h

@@ -1,0 +1,52 @@
+package no.tellu.tracker.control;
+
+import android.view.View;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
+import android.widget.CompoundButton.OnCheckedChangeListener;
+import no.tellu.android.app.ModuleController;
+import no.tellu.tracker.Track;
+import no.tellu.tracker.TrackerControl;
+
+/**
+ * Main view of the application, with tracker control and
+ * status.
+ * 
+ * @author Lars Thomas Boye, Tellu AS
+ */
+public class HeadsControlView extends FullControlView implements OnCheckedChangeListener {
+	CheckBox toggleSwitch;
+	boolean switchListenerOn = true;
+	
+	public HeadsControlView(ModuleController mc, String id) {
+		super(mc, id);
+	}
+	
+	@Override
+	public void onShown(View viewObj, String paramString) {
+		toggleSwitch = (CheckBox)findViewById(no.tellu.tracker.heads.R.id.trswitch);
+		toggleSwitch.setOnCheckedChangeListener(this);
+	}
+	
+	@Override
+	public void onHidden() {
+		toggleSwitch = null;
+	}
+
+	@Override
+	public void onTrackerState(int newState, Track track) {
+		switchListenerOn = false;
+		toggleSwitch.setChecked(newState > TrackerControl.TRACKING_TRACK);
+		switchListenerOn = true;
+	}
+
+	@Override
+	public void onCheckedChanged(CompoundButton view, boolean isChecked) {
+		if (switchListenerOn) {
+			if (isChecked)
+				trackerCtrl.startTracking(false);
+			else
+				trackerCtrl.stopTracking(false);
+		}
+	}
+}

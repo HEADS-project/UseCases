@@ -1,0 +1,51 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="gr.atc.heads.MainActivity" >
+    
+    <item android:id="@+id/action_account"
+        android:title="@string/account"
+        android:orderInCategory="100"
+        app:showAsAction="never" />
+
+    <item android:id="@+id/action_settings"
+        android:title="@string/settings"
+        android:orderInCategory="100"
+        app:showAsAction="never" />
+
+    <item android:id="@+id/action_delete"
+        android:title="@string/delete"
+        android:orderInCategory="100"
+        android:icon="@drawable/ic_menu_delete"
+        app:showAsAction="always" />
+    <item android:id="@+id/action_upload"
+        android:title="@string/upload"
+        android:orderInCategory="100"
+        android:icon="@drawable/ic_menu_upload"
+        app:showAsAction="always" />
+
+
+    <item android:id="@+id/action_refresh"
+        android:title="@string/refresh"
+        android:orderInCategory="100"
+        android:icon="@drawable/ic_menu_refresh"
+        app:showAsAction="always" />
+
+    <item android:id="@+id/action_map"
+        android:title="@string/showmap"
+        android:orderInCategory="100"
+        android:icon="@drawable/ic_menu_mapmode"
+        app:showAsAction="always" />
+
+    <item android:id="@+id/action_list"
+        android:title="@string/showlist"
+        android:orderInCategory="100"
+        android:icon="@drawable/ic_menu_list"
+        app:showAsAction="always" />
+
+    <item android:id="@+id/action_ok"
+        android:title="@string/OK"
+        android:orderInCategory="100"
+        app:showAsAction="always" />
+
+</menu>

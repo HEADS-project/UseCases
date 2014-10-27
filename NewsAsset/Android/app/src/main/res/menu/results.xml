@@ -1,0 +1,15 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto"
+      xmlns:tools="http://schemas.android.com/tools"
+      tools:context="gr.atc.heads.ResultsActivity" >
+    <item android:id="@+id/action_map"
+          android:title="@string/showmap"
+          android:orderInCategory="100"
+          android:icon="@drawable/ic_menu_mapmode"
+          app:showAsAction="always" />
+    <item android:id="@+id/action_list"
+        android:title="@string/showlist"
+        android:orderInCategory="100"
+        android:icon="@drawable/ic_menu_list"
+        app:showAsAction="always" />
+</menu>

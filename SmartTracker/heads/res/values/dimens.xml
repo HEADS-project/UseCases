@@ -1,0 +1,6 @@
+<resources>
+
+   <dimen name="SectionMargin">32dp</dimen>
+   <dimen name="StatusLED">32dp</dimen>
+
+</resources>

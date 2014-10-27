@@ -1,0 +1,1 @@
+link ../../../libwebp/src/webp/decode.h

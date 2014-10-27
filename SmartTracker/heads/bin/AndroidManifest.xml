@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="no.tellu.tracker.heads"
+    android:versionCode="1"
+    android:versionName="1.0" >
+
+    <uses-sdk android:minSdkVersion="11" android:targetSdkVersion="19" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+	<uses-permission android:name="android.permission.INTERNET" />
+	<uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+	<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+	<uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+	<uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+	<uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+	<uses-permission android:name="android.permission.RECEIVE_SMS" />
+	<uses-permission android:name="android.permission.READ_SMS" />
+	<uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+
+    <application
+        android:name="no.tellu.tracker.heads.HeadsApp"
+        android:label="@string/app_name"
+        android:icon="@drawable/ic_launcher"
+        android:allowBackup="false">
+        
+        <activity 
+        android:name="org.thingml.chestbelt.android.chestbeltdroid.devices.DevicesListActivity"
+        android:label="@string/app_name" 
+        android:launchMode="singleTask">
+        <!--         android:theme="@style/TelluTheme.Dark" -->
+        
+      	<intent-filter>
+        	<action android:name="android.intent.action.MAIN" />
+        	<category android:name="android.intent.category.LAUNCHER" />
+      	</intent-filter>
+      </activity>
+        
+        <activity
+            android:name="no.tellu.tracker.heads.HeadsActivity"
+            android:label="@string/app_name">
+           <!--  android:launchMode="singleTask"
+			android:configChanges="keyboardHidden|orientation">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter> -->
+        </activity>
+        
+         <activity 
+	          android:name="org.thingml.chestbelt.android.chestbeltdroid.preferences.PreferencesActivity"
+	          android:label="@string/app_name" >
+	      </activity>
+	
+		<service
+			android:name="org.thingml.chestbelt.android.chestbeltdroid.communication.BluetoothManagementService">
+		</service>
+        
+        <service android:name="no.tellu.android.app.system.TelluService">
+            <intent-filter>
+				<action android:name="no.tellu.boot" />
+				<action android:name="no.tellu.sms" />
+			</intent-filter>
+		</service>
+		
+        <receiver android:name="no.tellu.android.app.system.BootReceiver">
+			<intent-filter>
+				<action android:name="android.intent.action.BOOT_COMPLETED" />
+				<category android:name="android.intent.category.HOME" />
+			</intent-filter>
+		</receiver>
+		
+        <receiver android:name="no.tellu.tracker.heads.HeadsSms">
+			<intent-filter>
+				<action android:name="android.provider.Telephony.SMS_RECEIVED" />
+			</intent-filter>
+		</receiver>
+    </application>
+
+</manifest>

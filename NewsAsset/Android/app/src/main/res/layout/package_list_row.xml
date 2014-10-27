@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="fill_parent"
+	android:layout_height="wrap_content"
+	android:padding="5dip"
+    android:background="@drawable/tag_row_bg">
+
+	<ImageView
+		android:id="@+id/package_imageThumb"
+        android:layout_width="@dimen/thumbnail_size"
+	  	android:layout_height="@dimen/thumbnail_size"
+        android:layout_alignParentLeft="true"
+	  	android:scaleType="fitCenter"
+	  	android:layout_gravity="center_horizontal|center_vertical"
+	  	android:layout_margin="4dip"
+	  	android:background="@android:color/transparent" />
+	  	
+	<LinearLayout
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/package_imageThumb"
+		android:orientation="vertical"
+		android:gravity="center_vertical">
+			
+		<TextView
+			android:id="@+id/package_title"
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:singleLine="true"
+			android:textSize="@dimen/text_size_medium"
+			android:textStyle="bold"
+			android:text="Tags"/>
+		<TextView
+			android:id="@+id/package_user"
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:maxLines="2"
+			android:ellipsize="end"
+			android:textSize="@dimen/text_size_medium"
+			android:text="date"/>
+			
+		<TextView
+			android:id="@+id/package_date"
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:singleLine="true"
+			android:textSize="@dimen/text_size_small"			
+			android:text="Location"/>
+	</LinearLayout>
+
+    <ImageView
+        android:id="@+id/upload"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:visibility="gone"
+        android:scaleType="fitCenter"
+        android:layout_centerVertical="true"
+        android:layout_margin="4dip"
+        android:src="@drawable/ic_menu_upload" />
+		
+</RelativeLayout>

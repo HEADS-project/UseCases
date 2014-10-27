@@ -1,0 +1,84 @@
+package no.tellu.tracker.control;
+
+import org.thingml.chestbelt.android.chestbeltdroid.communication.BluetoothManagementService;
+import org.thingml.chestbelt.android.chestbeltdroid.communication.ChestBeltServiceConnection;
+import org.thingml.chestbelt.android.chestbeltdroid.communication.ChestBeltServiceConnection.ChestBeltServiceConnectionCallback;
+import org.thingml.chestbelt.android.chestbeltdroid.graph.GraphBaseView;
+import org.thingml.chestbelt.android.chestbeltdroid.graph.GraphDetailsView;
+import org.thingml.chestbelt.android.chestbeltdroid.graph.GraphWrapper;
+
+import android.content.Context;
+import android.content.Intent;
+import android.graphics.Color;
+import android.util.Log;
+import android.view.View;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
+import android.widget.TextView;
+import android.widget.CompoundButton.OnCheckedChangeListener;
+import no.tellu.android.app.ModuleController;
+import no.tellu.tracker.Track;
+import no.tellu.tracker.TrackerControl;
+import no.tellu.tracker.heads.R;
+
+/**
+ * Main view of the application, with tracker control and
+ * status.
+ * 
+ * @author Lars Thomas Boye, Tellu AS
+ */
+public class HeadsControlView extends FullControlView implements OnCheckedChangeListener {
+	CheckBox toggleSwitch;
+	boolean switchListenerOn = true;
+	
+	private TextView tvSensorName;
+	private GraphDetailsView graph;
+	
+	public HeadsControlView(ModuleController mc, String id) {
+		super(mc, id);
+	}
+	
+	@Override
+	public void onShown(View viewObj, String paramString) {
+		toggleSwitch = (CheckBox)findViewById(no.tellu.tracker.heads.R.id.trswitch);
+		toggleSwitch.setOnCheckedChangeListener(this);
+		tvSensorName = (TextView) findViewById(R.id.tv_graphrow_name);
+		tvSensorName.setText("ECG");
+		graph =  (GraphDetailsView) findViewById(R.id.gv_graphrow_graph);
+		
+	}
+	
+	
+	
+	@Override
+	public void onHidden() {
+		toggleSwitch = null;
+	}
+
+	@Override
+	public void onTrackerState(int newState, Track track) {
+		switchListenerOn = false;
+		toggleSwitch.setChecked(newState > TrackerControl.TRACKING_TRACK);
+		switchListenerOn = true;
+	}
+	
+	
+
+	@Override
+	public void onCheckedChanged(CompoundButton view, boolean isChecked) {
+		if (switchListenerOn) {
+			if (isChecked)
+				trackerCtrl.startTracking(false);
+			else
+				trackerCtrl.stopTracking(false);
+		}
+	}
+
+	
+	public void onBindingReady(ChestBeltServiceConnection chestBeltConnection) {
+		GraphWrapper wrapper = new GraphWrapper(chestBeltConnection.getBufferizer().getBufferECG());
+		wrapper.setGraphOptions(Color.RED, 100, GraphBaseView.LINECHART, 0, 4096, "ECG");
+		wrapper.setLineNumber(0);
+		graph.registerWrapper(wrapper);
+	}
+}
